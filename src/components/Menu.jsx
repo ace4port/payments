@@ -1,11 +1,9 @@
 import React from 'react'
-import LogOutIcon from '../components/icons/Logout'
-
 const Menu = () => {
   return (
-    <nav className="menu">
-      <LogOutIcon />
-    </nav>
+    <div className="menu">
+      <h1>Menu</h1>
+    </div>
   )
 }
 
