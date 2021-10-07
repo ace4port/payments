@@ -1,12 +1,15 @@
 import Menu from './components/Menu'
-import Button from './components/Button'
+import InvoicePay from './container/InvoicePay'
+import InvoicePaid from './container/InvoicePaid'
+
 import './styles/main.scss'
 
 function App() {
   return (
     <div className="App">
       <Menu />
-      <Button>Hello world</Button>
+      <InvoicePay />
+      <InvoicePaid />
     </div>
   )
 }
