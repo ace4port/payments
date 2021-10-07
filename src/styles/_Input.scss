@@ -1,0 +1,11 @@
+.input {
+  // display: block;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  @include dimension(42px, 270px);
+
+  border: 1px solid rgba(218, 218, 218, 1);
+
+  padding: 12px 20px;
+  font: 14px 500 inherit;
+}

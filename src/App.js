@@ -1,6 +1,7 @@
 import Menu from './components/Menu'
 import Payments from './Container/Payments'
 import PaymentsConfirm from './Container/PaymentConfirm'
+import InvoicePay from './Container/InvoicePay'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
@@ -13,6 +14,9 @@ function App() {
         <div className="navbar-container">
           <Link className="white-color" to="/">
             Menu
+          </Link>
+          <Link className="white-color" to="/pay">
+            Pay Invoice
           </Link>
           <Link className="white-color" to="/payments">
             Payment
@@ -28,6 +32,7 @@ function App() {
               <Route exact path="/" component={Menu} />
               <Route exact path="/payments" component={Payments} />
               <Route exact path="/paymentconfirm" component={PaymentsConfirm} />
+              <Route exact path="/pay" component={InvoicePay} />
             </Switch>
           </div>
           <div className="right-container"></div>

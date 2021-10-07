@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../components/Button'
 
-const InvoicePay = () => {
+const InvoicePay = ({ history }) => {
   return (
     <div>
       <h1>Invoices</h1>
@@ -19,7 +19,7 @@ const InvoicePay = () => {
       >
         Print
       </Button>
-      <Button size="medium" onClick={() => console.log('Pay')}>
+      <Button size="medium" onClick={() => history.push('/payments')}>
         Pay now
       </Button>
     </div>
