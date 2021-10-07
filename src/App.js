@@ -1,9 +1,10 @@
-import './styles/main.scss'
 import Menu from './components/Menu'
 import Payments from './Container/Payments'
 import PaymentsConfirm from './Container/PaymentConfirm'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+
+import './styles/main.scss'
 
 function App() {
   return (
