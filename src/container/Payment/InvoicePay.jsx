@@ -22,7 +22,7 @@ const InvoicePay = ({ history }) => {
         {invoice !== null ? (
           <div className="invoice-container__details">
             <h5
-              className={`invoiceState ${status && 'approved'}`}
+              className={`invoiceState ${status ? 'approved' : 'rejected'}`}
             >{`${invoice[0].status}`}</h5>
 
             <p className="invoice">
