@@ -1,5 +1,5 @@
 import Menu from './components/Menu'
-import Payments from './container/Payments'
+import Payments from './container/Payments/Payments'
 import PaymentsConfirm from './container/PaymentConfirm'
 import InvoicePay from './container/InvoicePay'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
