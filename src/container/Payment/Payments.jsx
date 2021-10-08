@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Button from '../../components/Button'
-
+import { useDispatch } from 'react-redux'
+import { payWithCard, payWithGofaaa } from '../../features/payment/PaymentSlice'
 const Payments = () => {
   return (
     <div>
@@ -14,15 +15,26 @@ const Payments = () => {
 export default Payments
 
 const CardPay = () => {
+  const dispatch = useDispatch()
+
   const [collapsed, setCollapsed] = useState(false)
   const [formData, setFormData] = useState({
-    name: '',
-    number: '',
-    expiry: '',
+    cardholder_name: '',
+    card_no: '',
+    expiry_date: '',
     cvv: 'XXX',
   })
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    const finalData = {
+      ...formData,
+      expiry_date: `${new Date(formData.expiry_date).getMonth() + 1}/${new Date(
+        formData.expiry_date
+      ).getFullYear()}`,
+      invoice_id: 1,
+    }
+    dispatch(payWithCard(finalData))
     console.log('You have submitted this data', formData)
   }
 
@@ -41,7 +53,7 @@ const CardPay = () => {
         <input
           className="input"
           type="text"
-          name="name"
+          name="cardholder_name"
           placeholder="Card holder name"
           value={formData.name}
           onChange={(e) =>
@@ -52,7 +64,7 @@ const CardPay = () => {
           className="input"
           type="text"
           placeholder="Card number"
-          name="number"
+          name="card_no"
           value={formData.number}
           onChange={(e) =>
             setFormData({
@@ -69,7 +81,7 @@ const CardPay = () => {
           type="month"
           placeholder="Expiry date"
           value={formData.expiry}
-          name="expiry"
+          name="expiry_date"
           min="2021-10"
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -85,6 +97,7 @@ const CardPay = () => {
             setFormData({ ...formData, [e.target.name]: e.target.value })
           }
         />
+        <h3 className="errorMessage">Error</h3>
         <Button type="submit" variant="primary" size="medium">
           Pay now
         </Button>
@@ -96,7 +109,13 @@ const CardPay = () => {
 }
 
 const Wallet = () => {
+  const dispatch = useDispatch()
+
   const [collapsed, setCollapsed] = useState(false)
+  const finalData = { invoice_id: 1, user_id: 3 }
+  const hanldePayWithGofaa = () => {
+    dispatch(payWithGofaaa(finalData))
+  }
   return (
     <div className="collapse">
       <button
@@ -107,7 +126,7 @@ const Wallet = () => {
       </button>
       <div className={`collapse__content ${collapsed ? 'expand' : ''}`}>
         <p>Balance: $2500</p>
-        <Button variant="primary" size="medium">
+        <Button onClick={hanldePayWithGofaa} variant="primary" size="medium">
           Pay now
         </Button>
       </div>
