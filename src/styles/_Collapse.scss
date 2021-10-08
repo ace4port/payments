@@ -1,0 +1,56 @@
+.collapse {
+  &__btn {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    color: #2c2c2c;
+
+    cursor: pointer;
+    background-color: white;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+
+    &::after {
+      content: '+';
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+  }
+
+  .active,
+  &--btn:hover {
+    background-color: rgba(165, 153, 153, 0.082);
+  }
+  .active:after {
+    content: '\2212';
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    padding: 0px 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 170%;
+    color: #6e6e6e;
+  }
+  .expand {
+    padding: 10px 18px;
+    max-height: max-content;
+  }
+  &__seperator {
+    border-top: 1px solid #ddd;
+  }
+}

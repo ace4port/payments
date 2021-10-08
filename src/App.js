@@ -1,7 +1,7 @@
 import Menu from './components/Menu'
-import Payments from './Container/Payments'
-import PaymentsConfirm from './Container/PaymentConfirm'
-import InvoicePay from './Container/InvoicePay'
+import Payments from './container/Payments'
+import PaymentsConfirm from './container/PaymentConfirm'
+import InvoicePay from './container/InvoicePay'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 

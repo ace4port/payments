@@ -8,4 +8,10 @@
 
   padding: 12px 20px;
   font: 14px 500 inherit;
+  &:focus {
+    outline: none;
+    border-radius: 0px;
+    border-bottom: 2px solid #1f9944;
+    background-color: rgb(223, 223, 223);
+  }
 }
