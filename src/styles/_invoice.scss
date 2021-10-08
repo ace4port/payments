@@ -1,0 +1,46 @@
+.invoice-container {
+  width: 1066px;
+  margin: 0 auto;
+  &__details {
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 15px;
+    .invoiceState {
+      background-color: red;
+      width: 80px;
+      height: 30px;
+      padding: 7px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 3px;
+      text-align: center;
+    }
+    .invoice {
+      font-size: 20px;
+      font-weight: bold;
+      &-id {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: right;
+      margin-right: 55px;
+      &-amount {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
+  }
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+  &__button > * {
+    margin-right: 10px;
+  }
+}
