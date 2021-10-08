@@ -22,8 +22,10 @@ const CardPay = () => {
     cvv: 'XXX',
   })
   const handleSubmit = (e) => {
+    e.preventDefault()
     console.log('You have submitted this data', formData)
   }
+
   return (
     <div className="collapse">
       <button
@@ -80,6 +82,7 @@ const CardPay = () => {
         <Button type="submit" variant="primary" size="medium">
           Pay now
         </Button>
+        <p>{JSON.stringify(formData)}</p>
       </form>
       <hr className="collapse__seperator" />
     </div>
