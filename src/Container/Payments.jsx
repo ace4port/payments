@@ -25,14 +25,17 @@ const CardPay = () => {
     console.log('You have submitted this data', formData)
   }
   return (
-    <form onSubmit={handleSubmit} className="collapse">
+    <div className="collapse">
       <button
         className={`collapse__btn ${collapsed ? 'active' : ''}`}
         onClick={() => setCollapsed(!collapsed)}
       >
         Pay with Card
       </button>
-      <div className={`collapse__content ${collapsed ? 'expand' : ''}`}>
+      <form
+        onSubmit={handleSubmit}
+        className={`collapse__content ${collapsed ? 'expand' : ''}`}
+      >
         <input
           className="input"
           type="text"
@@ -55,10 +58,11 @@ const CardPay = () => {
         />
         <input
           className="input"
-          type="date"
+          type="month"
           placeholder="Expiry date"
           value={formData.expiry}
           name="expiry"
+          min="2021-10"
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
           }
@@ -76,9 +80,9 @@ const CardPay = () => {
         <Button type="submit" variant="primary" size="medium">
           Pay now
         </Button>
-      </div>
+      </form>
       <hr className="collapse__seperator" />
-    </form>
+    </div>
   )
 }
 
