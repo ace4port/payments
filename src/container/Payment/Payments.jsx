@@ -55,7 +55,13 @@ const CardPay = () => {
           name="number"
           value={formData.number}
           onChange={(e) =>
-            setFormData({ ...formData, [e.target.name]: e.target.value })
+            setFormData({
+              ...formData,
+              [e.target.name]: e.target.value
+                .replace(/[^\dA-Z]/g, '')
+                .replace(/(.{4})/g, '$1 ')
+                .trim(),
+            })
           }
         />
         <input
