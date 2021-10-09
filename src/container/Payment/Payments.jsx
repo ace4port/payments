@@ -7,6 +7,7 @@ import {
   payWithGofaaa,
 } from '../../features/payment/PaymentSlice'
 import { useSelector } from 'react-redux'
+import Loader from '../../components/Loader'
 
 const Payments = ({ history }) => {
   const dispatch = useDispatch()
@@ -27,9 +28,10 @@ const Payments = ({ history }) => {
       <CardPay />
       <Wallet />
 
-      {loading && <h3 className="errorMessage">Loading ...</h3>}
-      {paymentFail && <h3 className="errorMessage">Error {errorMsg}</h3>}
+      {loading && <Loader />}
       {paymentSuccess && <h3 className="errorMessage">{errorMsg}</h3>}
+      {paymentFail && <h3 className="errorMessage">Error {errorMsg}</h3>}
+      {paymentFail && <Loader />}
     </div>
   )
 }
@@ -57,7 +59,6 @@ const CardPay = () => {
       invoice_id: 1,
     }
     dispatch(payWithCard(finalData))
-    console.log('You have submitted this data', formData)
   }
 
   return (

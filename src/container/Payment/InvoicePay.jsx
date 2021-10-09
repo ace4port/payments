@@ -20,17 +20,14 @@ const InvoicePay = ({ history }) => {
       <h1>Invoices</h1>
       <div className="invoice-container">
         {loading ? (
-          <>
-            Loading ...
-            <Loader />
-          </>
+          <Loader />
         ) : (
           invoices.map((inv) => (
             <Invoice key={inv.id} invoice={inv} history={history} />
           ))
         )}
         {error && 'Could not fetch invoices'}
-        {error && <Loader />}
+        <div>{error && <Loader />}</div>
       </div>
     </div>
   )

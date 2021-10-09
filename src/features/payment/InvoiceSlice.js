@@ -23,14 +23,15 @@ const InvoiceSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getInvoice.pending, (state) => {
-        state.isLoading = true
+        state.loading = true
       })
       .addCase(getInvoice.fulfilled, (state, action) => {
         state.invoice = action.payload.data
-        state.isLoading = false
+        state.loading = false
       })
       .addCase(getInvoice.rejected, (state, action) => {
-        state.isLoading = true
+        state.loading = false
+        state.error = true
       })
   },
 })
