@@ -14,7 +14,7 @@ const Payments = ({ history }) => {
   const paymentFail = useSelector((state) => state.payment.error)
   const errorMsg = useSelector((state) => state.payment.msg)
   const loading = useSelector((state) => state.payment.isLoading)
-  paymentSuccess && setTimeout(() => history.push('/paymentConfirm'), 2000)
+  paymentSuccess && setTimeout(() => history.push('/paymentConfirm'), 1500)
 
   useEffect(() => {
     return () => {

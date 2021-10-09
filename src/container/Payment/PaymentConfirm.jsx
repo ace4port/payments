@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Invoice } from './InvoicePay'
 
 const PaymentConfirm = ({ history }) => {
-  const invoice = useSelector((state) => state.payment.invoice)
+  const invoice = useSelector((state) => state.invoice.invoice)
   const selected = useSelector((state) => state.invoice.selectedInvoice)
 
   return (

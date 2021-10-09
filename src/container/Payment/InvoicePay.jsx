@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Button from '../../components/Button'
 import PrintIcon from '../../components/icons/PrintIcon'
 import { useDispatch, useSelector } from 'react-redux'
-import { getInvoice } from '../../features/payment/PaymentSlice'
+import { getInvoice } from '../../features/payment/InvoiceSlice'
 import { selectInvoice } from '../../features/payment/InvoiceSlice'
 
 const InvoicePay = ({ history }) => {
@@ -10,7 +10,8 @@ const InvoicePay = ({ history }) => {
   useEffect(() => {
     dispatch(getInvoice())
   }, [dispatch])
-  const invoices = useSelector((state) => state.payment.invoice)
+
+  const invoices = useSelector((state) => state.invoice.invoice)
   const loading = useSelector((state) => state.payment.isLoading)
 
   return (
@@ -21,7 +22,9 @@ const InvoicePay = ({ history }) => {
         {loading ? (
           <h2>Loading ...</h2>
         ) : (
-          invoices.map((inv) => <Invoice invoice={inv} history={history} />)
+          invoices.map((inv) => (
+            <Invoice key={inv.id} invoice={inv} history={history} />
+          ))
         )}
       </div>
     </div>

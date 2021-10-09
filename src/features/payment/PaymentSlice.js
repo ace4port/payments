@@ -9,10 +9,6 @@ const initialState = {
   msg: '',
 }
 
-export const getInvoice = createAsyncThunk('payment/getInvoice', async () => {
-  return await api.getInvoices()
-})
-
 export const payWithCard = createAsyncThunk(
   'payment/payWithCard',
   async (data) => {
@@ -38,17 +34,6 @@ const PaymentSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getInvoice.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(getInvoice.fulfilled, (state, action) => {
-        state.invoice = action.payload.data
-        state.isLoading = false
-      })
-      .addCase(getInvoice.rejected, (state, action) => {
-        state.isLoading = true
-      })
-
       .addCase(payWithCard.pending, (state) => {
         state.isLoading = true
       })

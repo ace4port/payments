@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let url = 'http://4507-49-244-15-6.ngrok.io/api'
+let url = 'http://e706-49-244-15-6.ngrok.io/api'
 
 export const getInvoices = async () => await axios.get(`${url}/invoice/`)
 
