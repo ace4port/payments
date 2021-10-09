@@ -36,7 +36,10 @@ const PaymentSlice = createSlice({
   initialState,
   reducers: {
     init(state) {
-      state = initialState
+      state.isLoading = false
+      state.error = false
+      state.success = false
+      state.msg = ''
     },
   },
   extraReducers: (builder) => {

@@ -10,12 +10,7 @@ import { useSelector } from 'react-redux'
 
 const Payments = ({ history }) => {
   const dispatch = useDispatch()
-
-  // Janky code -- needs improvement in logic
-  useEffect(() => {
-    dispatch(init())
-    return () => dispatch(init())
-  }, [dispatch])
+  useEffect(() => () => dispatch(init()), [dispatch])
 
   const paymentSuccess = useSelector((state) => state.payment.success)
   const paymentFail = useSelector((state) => state.payment.error)
@@ -49,7 +44,7 @@ const CardPay = () => {
     cardholder_name: '',
     card_no: '',
     expiry_date: '',
-    cvv: 'XXX',
+    cvv: '',
   })
 
   const handleSubmit = (e) => {
