@@ -3,51 +3,61 @@ import Button from '../../components/Button'
 import PrintIcon from '../../components/icons/PrintIcon'
 import { useDispatch, useSelector } from 'react-redux'
 import { getInvoice } from '../../features/payment/PaymentSlice'
+import { selectInvoice } from '../../features/payment/InvoiceSlice'
+
 const InvoicePay = ({ history }) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getInvoice())
   }, [dispatch])
-  const invoice = useSelector((state) => state.payment.invoice)
-  const status = useSelector((state) => state.payment.paymentSuccess)
+  const invoices = useSelector((state) => state.payment.invoice)
+  const loading = useSelector((state) => state.payment.isLoading)
 
-  const handlePrint = () => {
-    console.log('print')
-  }
   return (
     <div>
       <h1>Invoices</h1>
       <h2>Pay your invoices</h2>
       <div className="invoice-container">
-        {invoice !== null ? (
-          <div className="invoice-container__details">
-            <h5
-              className={`invoiceState ${status ? 'approved' : 'rejected'}`}
-            >{`${invoice[0].status}`}</h5>
-
-            <p className="invoice">
-              Invoice <span className="invoice-id">{`#${invoice[0].id}`}</span>
-            </p>
-            <hr />
-            <p className="total">
-              Total:{' '}
-              <span className="total-amount">{`$${invoice[0].amount}`}</span>
-            </p>
-          </div>
+        {loading ? (
+          <h2>Loading ...</h2>
         ) : (
-          ''
+          invoices.map((inv) => <Invoice invoice={inv} history={history} />)
         )}
-        <div className="invoice-container__button">
-          <div className="print-icon" onClick={handlePrint}>
-            <PrintIcon></PrintIcon>
-          </div>
-          <Button size="medium" onClick={() => history.push('/payments')}>
-            Pay now
-          </Button>
-        </div>
       </div>
     </div>
   )
 }
 
 export default InvoicePay
+
+export const Invoice = ({ invoice, history }) => {
+  const dispatch = useDispatch()
+  return (
+    <div className="invoice-container__details">
+      <p className="invoice">
+        Invoice Ref<span className="invoice-id">{`#${invoice.id}`}</span>
+      </p>
+      <p className="total">
+        Total: <span className="total-amount">{`$${invoice.amount}`}</span>
+      </p>
+      <h5
+        className={`invoiceState ${
+          invoice.status === 'approved' ? 'approved' : 'rejected'
+        }`}
+      >{`${invoice.status}`}</h5>
+      <div className="invoice-container__button">
+        <div className="print-icon"></div>
+        <Button
+          size="small"
+          onClick={() => {
+            dispatch(selectInvoice(invoice.id))
+            history.push('/payments')
+          }}
+        >
+          Pay now
+        </Button>
+        <PrintIcon />
+      </div>
+    </div>
+  )
+}

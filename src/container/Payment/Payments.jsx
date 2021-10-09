@@ -1,13 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../components/Button'
 import { useDispatch } from 'react-redux'
-import { payWithCard, payWithGofaaa } from '../../features/payment/PaymentSlice'
-const Payments = () => {
+import {
+  init,
+  payWithCard,
+  payWithGofaaa,
+} from '../../features/payment/PaymentSlice'
+import { useSelector } from 'react-redux'
+
+const Payments = ({ history }) => {
+  const dispatch = useDispatch()
+  const paymentSuccess = useSelector((state) => state.payment.success)
+  const paymentFail = useSelector((state) => state.payment.error)
+  const errorMsg = useSelector((state) => state.payment.msg)
+  const loading = useSelector((state) => state.payment.isLoading)
+  paymentSuccess && setTimeout(() => history.push('/paymentConfirm'), 2000)
+
+  useEffect(() => {
+    return () => {
+      dispatch(init())
+    }
+  }, [dispatch])
+
   return (
     <div>
       <h1>Make Invoice payment</h1>
       <CardPay />
       <Wallet />
+
+      {loading && <h3 className="errorMessage">Loading ...</h3>}
+      {paymentFail && <h3 className="errorMessage">Error {errorMsg}</h3>}
+      {paymentSuccess && <h3 className="errorMessage">{errorMsg}</h3>}
     </div>
   )
 }
@@ -89,19 +112,18 @@ const CardPay = () => {
         />
         <input
           className="input"
-          type="text"
+          type="password"
           placeholder="CVV"
           name="cvv"
+          maxLength={3}
           value={formData.cvv}
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
           }
         />
-        <h3 className="errorMessage">Error</h3>
         <Button type="submit" variant="primary" size="medium">
           Pay now
         </Button>
-        <p>{JSON.stringify(formData)}</p>
       </form>
       <hr className="collapse__seperator" />
     </div>
@@ -110,10 +132,13 @@ const CardPay = () => {
 
 const Wallet = () => {
   const dispatch = useDispatch()
-
+  const selected_id = useSelector((state) => state.invoice.selectedInvoice)
   const [collapsed, setCollapsed] = useState(false)
-  const finalData = { invoice_id: 1, user_id: 3 }
-  const hanldePayWithGofaa = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' })
+
+  const hanldePayWithGofaa = (e) => {
+    e.preventDefault()
+    const finalData = { invoice_id: selected_id, ...formData }
     dispatch(payWithGofaaa(finalData))
   }
   return (
@@ -124,9 +149,37 @@ const Wallet = () => {
       >
         Pay with GoFaa Wallet
       </button>
+
       <div className={`collapse__content ${collapsed ? 'expand' : ''}`}>
         <p>Balance: $2500</p>
-        <Button onClick={hanldePayWithGofaa} variant="primary" size="medium">
+
+        <input
+          className="input"
+          type="text"
+          name="username"
+          placeholder="Username"
+          value={formData.username}
+          onChange={(e) =>
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+          }
+        />
+        <input
+          className="input"
+          type="password"
+          name="password"
+          placeholder="Password"
+          value={formData.pasword}
+          onChange={(e) =>
+            setFormData({ ...formData, [e.target.name]: e.target.value })
+          }
+        />
+
+        <Button
+          type="submit"
+          onClick={hanldePayWithGofaa}
+          variant="primary"
+          size="medium"
+        >
           Pay now
         </Button>
       </div>

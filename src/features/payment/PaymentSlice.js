@@ -4,14 +4,15 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 const initialState = {
   isLoading: false,
   error: false,
-  mg: '',
-  invoice: null,
-  paymentSuccess: true,
+  success: false,
+  invoice: [],
+  msg: '',
 }
-//error message dekhaune
+
 export const getInvoice = createAsyncThunk('payment/getInvoice', async () => {
   return await api.getInvoices()
 })
+
 export const payWithCard = createAsyncThunk(
   'payment/payWithCard',
   async (data) => {
@@ -32,7 +33,7 @@ const PaymentSlice = createSlice({
   initialState,
   reducers: {
     init: (state) => {
-      state = initialState
+      state = { ...initialState, invoice: state.invoice }
     },
   },
   extraReducers: (builder) => {
@@ -41,37 +42,44 @@ const PaymentSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getInvoice.fulfilled, (state, action) => {
-        state.invoice = { ...action.payload.data }
+        state.invoice = action.payload.data
         state.isLoading = false
       })
       .addCase(getInvoice.rejected, (state, action) => {
         state.isLoading = true
       })
+
       .addCase(payWithCard.pending, (state) => {
         state.isLoading = true
       })
       .addCase(payWithCard.fulfilled, (state, action) => {
         state.isLoading = false
-        state.paymentSuccess = true
-        state.mg = { ...action.payload.data }
+        state.success = true
+        state.msg = action.payload.data
       })
-      .addCase(payWithCard.rejected, (state) => {
+      .addCase(payWithCard.rejected, (state, action) => {
         state.isLoading = false
+        state.error = true
+        state.msg = action.payload.data
       })
+
       .addCase(payWithGofaaa.pending, (state) => {
         state.isLoading = true
       })
       .addCase(payWithGofaaa.fulfilled, (state, action) => {
-        state.mg = action.payload.data
         state.isLoading = false
+        state.success = true
+        state.msg = action.payload.data
       })
       .addCase(payWithGofaaa.rejected, (state, action) => {
         state.isLoading = false
+        state.error = true
+        state.msg = action.payload.data
       })
   },
 })
 
-// export const { selectCalendar, unselectCalendar } = CalendarSlice.actions
+export const { init } = PaymentSlice.actions
 
 // export const calendarList = (state) => state.calendar.calendars
 // export const calendarLoading = (state) => state.calendar.isLoading
