@@ -10,18 +10,22 @@ import { useSelector } from 'react-redux'
 
 const Payments = ({ history }) => {
   const dispatch = useDispatch()
+
+  // Janky code -- needs improvement in logic
+  useEffect(() => {
+    dispatch(init())
+    return () => dispatch(init())
+  }, [dispatch])
+
   const paymentSuccess = useSelector((state) => state.payment.success)
   const paymentFail = useSelector((state) => state.payment.error)
   const errorMsg = useSelector((state) => state.payment.msg)
   const loading = useSelector((state) => state.payment.isLoading)
-  paymentSuccess && setTimeout(() => history.push('/paymentConfirm'), 1500)
 
-  useEffect(() => {
-    return () => {
-      dispatch(init())
-    }
-  }, [dispatch])
+  //clear previous success
 
+  paymentSuccess && history.push('/paymentConfirm')
+  // paymentSuccess && setTimeout(() => history.push('/paymentConfirm'), 1500)
   return (
     <div>
       <h1>Make Invoice payment</h1>
@@ -79,6 +83,7 @@ const CardPay = () => {
           name="cardholder_name"
           placeholder="Card holder name"
           value={formData.name}
+          required
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
           }
@@ -89,6 +94,7 @@ const CardPay = () => {
           placeholder="Card number"
           name="card_no"
           value={formData.number}
+          required
           onChange={(e) =>
             setFormData({
               ...formData,
@@ -106,6 +112,7 @@ const CardPay = () => {
           value={formData.expiry}
           name="expiry_date"
           min="2021-10"
+          required
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
           }
@@ -116,6 +123,7 @@ const CardPay = () => {
           placeholder="CVV"
           name="cvv"
           maxLength={3}
+          required
           value={formData.cvv}
           onChange={(e) =>
             setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -136,7 +144,7 @@ const Wallet = () => {
   const [collapsed, setCollapsed] = useState(false)
   const [formData, setFormData] = useState({ username: '', password: '' })
 
-  const hanldePayWithGofaa = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     const finalData = { invoice_id: selected_id, ...formData }
     dispatch(payWithGofaaa(finalData))
@@ -152,36 +160,32 @@ const Wallet = () => {
 
       <div className={`collapse__content ${collapsed ? 'expand' : ''}`}>
         <p>Balance: $2500</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            className="input"
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={formData.username}
+            onChange={(e) =>
+              setFormData({ ...formData, [e.target.name]: e.target.value })
+            }
+          />
+          <input
+            className="input"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.pasword}
+            onChange={(e) =>
+              setFormData({ ...formData, [e.target.name]: e.target.value })
+            }
+          />
 
-        <input
-          className="input"
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={(e) =>
-            setFormData({ ...formData, [e.target.name]: e.target.value })
-          }
-        />
-        <input
-          className="input"
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.pasword}
-          onChange={(e) =>
-            setFormData({ ...formData, [e.target.name]: e.target.value })
-          }
-        />
-
-        <Button
-          type="submit"
-          onClick={hanldePayWithGofaa}
-          variant="primary"
-          size="medium"
-        >
-          Pay now
-        </Button>
+          <Button type="submit" variant="primary" size="medium">
+            Pay now
+          </Button>
+        </form>
       </div>
       <hr className="collapse__seperator" />
     </div>
