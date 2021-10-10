@@ -53,7 +53,7 @@ export const Invoice = ({ invoice, history }) => {
       </p>
       <h5
         className={`invoiceState ${
-          invoice.status === 'approved' ? 'approved' : 'rejected'
+          invoice.status === 'Approved' ? 'approved' : 'rejected'
         }`}
       >{`${invoice.status}`}</h5>
       <div className="invoice-container__button">

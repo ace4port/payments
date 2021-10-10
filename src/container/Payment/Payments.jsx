@@ -6,6 +6,7 @@ import {
   payWithCard,
   payWithGofaaa,
 } from '../../features/payment/PaymentSlice'
+import { invoicePaid } from '../../features/payment/InvoiceSlice'
 import { useSelector } from 'react-redux'
 import Loader from '../../components/Loader'
 
@@ -40,6 +41,7 @@ export default Payments
 
 const CardPay = () => {
   const dispatch = useDispatch()
+  const selected_id = useSelector((state) => state.invoice.selectedInvoice)
 
   const [collapsed, setCollapsed] = useState(false)
   const [formData, setFormData] = useState({
@@ -53,12 +55,13 @@ const CardPay = () => {
     e.preventDefault()
     const finalData = {
       ...formData,
+      // card_no: card_no.
       expiry_date: `${new Date(formData.expiry_date).getMonth() + 1}/${new Date(
         formData.expiry_date
       ).getFullYear()}`,
-      invoice_id: 1,
+      invoice_id: selected_id,
     }
-    dispatch(payWithCard(finalData))
+    dispatch(payWithCard(finalData)).then(dispatch(invoicePaid(selected_id)))
   }
 
   return (
@@ -89,16 +92,22 @@ const CardPay = () => {
           type="text"
           placeholder="Card number"
           name="card_no"
-          value={formData.number}
+          value={formData.card_no}
           required
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              [e.target.name]: e.target.value
-                .replace(/[^\dA-Z]/g, '')
-                .replace(/(.{4})/g, '$1 ')
-                .trim(),
-            })
+          onChange={
+            (e) =>
+              setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+              })
+            // onChange={(e) =>
+            //   setFormData({
+            //     ...formData,
+            //     [e.target.name]: e.target.value
+            //       .replace(/[^\dA-Z]/g, '')
+            //       .replace(/(.{4})/g, '$1 ')
+            //       .trim(),
+            //   })
           }
         />
         <input

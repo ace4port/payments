@@ -1,10 +1,14 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getInvoice } from '../../features/payment/InvoiceSlice'
 import { Invoice } from './InvoicePay'
 
 const PaymentConfirm = ({ history }) => {
+  const dispatch = useDispatch()
   const invoice = useSelector((state) => state.invoice.invoice)
   const selected = useSelector((state) => state.invoice.selectedInvoice)
+
+  useEffect(() => dispatch(getInvoice()), [dispatch])
 
   if (!selected) {
     history.push('/')

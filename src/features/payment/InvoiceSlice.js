@@ -19,6 +19,12 @@ const InvoiceSlice = createSlice({
     selectInvoice: (state, action) => {
       state.selectedInvoice = action.payload
     },
+    invoicePaid: (state, action) => {
+      console.log('Heree')
+      state.invoice = state.invoice.map((inv) =>
+        inv.id === action.payload.id ? action.payload : inv
+      )
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -29,13 +35,13 @@ const InvoiceSlice = createSlice({
         state.invoice = action.payload.data
         state.loading = false
       })
-      .addCase(getInvoice.rejected, (state, action) => {
+      .addCase(getInvoice.rejected, (state) => {
         state.loading = false
         state.error = true
       })
   },
 })
 
-export const { selectInvoice } = InvoiceSlice.actions
+export const { selectInvoice, invoicePaid } = InvoiceSlice.actions
 
 export default InvoiceSlice.reducer
