@@ -55,7 +55,7 @@ const CardPay = () => {
     e.preventDefault()
     const finalData = {
       ...formData,
-      // card_no: card_no.
+      card_no: formData.card_no.replace(/\s/g, ''),
       expiry_date: `${new Date(formData.expiry_date).getMonth() + 1}/${new Date(
         formData.expiry_date
       ).getFullYear()}`,
@@ -94,20 +94,14 @@ const CardPay = () => {
           name="card_no"
           value={formData.card_no}
           required
-          onChange={
-            (e) =>
-              setFormData({
-                ...formData,
-                [e.target.name]: e.target.value,
-              })
-            // onChange={(e) =>
-            //   setFormData({
-            //     ...formData,
-            //     [e.target.name]: e.target.value
-            //       .replace(/[^\dA-Z]/g, '')
-            //       .replace(/(.{4})/g, '$1 ')
-            //       .trim(),
-            //   })
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              [e.target.name]: e.target.value
+                .replace(/[^\dA-Z]/g, '')
+                .replace(/(.{4})/g, '$1 ')
+                .trim(),
+            })
           }
         />
         <input
