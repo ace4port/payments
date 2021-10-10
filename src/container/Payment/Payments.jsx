@@ -31,7 +31,7 @@ const Payments = ({ history }) => {
       {loading && <Loader />}
       {paymentSuccess && <h3 className="errorMessage">{errorMsg}</h3>}
       {paymentFail && <h3 className="errorMessage">Error {errorMsg}</h3>}
-      {paymentFail && <Loader />}
+      {paymentFail && <Loader type="error" />}
     </div>
   )
 }

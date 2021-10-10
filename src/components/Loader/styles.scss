@@ -6,7 +6,7 @@
   border-radius: 3px;
   font-size: 30px;
   padding: 3px;
-  background-color: #000;
+  // background-color: #000;
   //   position: relative;
   //   margin-bottom: 0.25em;
   //   vertical-align: top;
@@ -77,7 +77,7 @@
 
 .loader-16 {
   transform: rotateZ(45deg);
-  color: #fff;
+  color: inherit;
   perspective: 1000px;
   border-radius: 50%;
   &:before,
